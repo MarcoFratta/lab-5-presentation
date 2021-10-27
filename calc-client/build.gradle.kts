@@ -3,5 +3,5 @@ plugins {
 }
 
 dependencies {
-    api(project(":rpc-common"))
+    api(project(":calc-common"))
 }
