@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -19,6 +20,48 @@ public class TestSerializeAndDeserialize {
             Role.USER,
             "giovanni.ciatto@unibo.it",
             "giovanni.ciatto@studio.unibo.it"
+    );
+
+    protected final User andreaUser = new User(
+            "Andrea Omicini",
+            "aomicini",
+            "123456!",
+            LocalDate.of(1965, Month.FEBRUARY, 2),
+            Role.USER,
+            "andrea.omicini@unibo.it"
+    );
+
+    protected final User stefanoUser = new User(
+            null,
+            "stemar",
+            "987abc!",
+            null,
+            null,
+            "stefano.mariani@unibo.it"
+    );
+
+    protected final User noUsernameUser = new User(
+            null,
+            null,
+            "987abc!",
+            null,
+            null
+    );
+
+    protected final User noPasswordUser = new User(
+            null,
+            "someone",
+            null,
+            null,
+            null
+    );
+
+    protected final User noEmailUser = new User(
+            null,
+            "someone",
+            "password",
+            null,
+            null
     );
 
     private final Credentials giovanniCredentials = new Credentials(
@@ -60,9 +103,12 @@ public class TestSerializeAndDeserialize {
 
     @Test
     public void testUser() {
-        String serialized = gson.toJson(giovanniUser);
-        User deserialized = gson.fromJson(serialized, User.class);
-        assertEquals(giovanniUser, deserialized);
+        for (var user : List.of(giovanniUser, andreaUser, stefanoUser, noUsernameUser, noEmailUser, noPasswordUser)) {
+            String serialized = gson.toJson(user);
+            User deserialized = gson.fromJson(serialized, User.class);
+            assertEquals(user, deserialized);
+            System.out.println("ok: " + user);
+        }
     }
 
     @Test

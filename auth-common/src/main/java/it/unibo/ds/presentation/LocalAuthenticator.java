@@ -9,7 +9,7 @@ public class LocalAuthenticator implements Authenticator {
     private final Map<String, User> usersByEmail = new HashMap<>();
 
     @Override
-    public void register(User user) throws BadContentException, ConflictException {
+    public synchronized void register(User user) throws BadContentException, ConflictException {
         if (user.getUsername() == null || user.getUsername().isBlank()) {
             throw new BadContentException("Invalid username: " + user.getUsername());
         }
@@ -38,7 +38,7 @@ public class LocalAuthenticator implements Authenticator {
     }
 
     @Override
-    public Token authorize(Credentials credentials) throws BadContentException, WrongCredentialsException {
+    public synchronized Token authorize(Credentials credentials) throws BadContentException, WrongCredentialsException {
         if (credentials.getUserId() == null || credentials.getUserId().isBlank()) {
             throw new BadContentException("Missing user ID: " + credentials.getUserId());
         }

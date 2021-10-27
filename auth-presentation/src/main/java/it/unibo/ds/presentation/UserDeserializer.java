@@ -1,9 +1,6 @@
 package it.unibo.ds.presentation;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
+import com.google.gson.*;
 
 import java.lang.reflect.Type;
 import java.time.LocalDate;
@@ -12,18 +9,37 @@ import java.util.List;
 
 public class UserDeserializer implements JsonDeserializer<User> {
 
+    private String getPropertyAsString(JsonObject object, String name) {
+        if (object.has(name)) {
+            JsonElement value = object.get(name);
+            if (value.isJsonNull()) return null;
+            return value.getAsString();
+        }
+        return null;
+    }
+
+    private <T> T getPropertyAs(JsonObject object, String name, Class<T> type,  JsonDeserializationContext context) {
+        if (object.has(name)) {
+            JsonElement value = object.get(name);
+            if (value.isJsonNull()) return null;
+            return context.deserialize(value, type);
+        }
+        return null;
+    }
+
     @Override
     public User deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         try {
             var object = json.getAsJsonObject();
-            var fullName = object.has("full_name") ? object.get("full_name").getAsString() : null;
-            var username = object.has("username") ? object.get("username").getAsString() : null;
-            var password = object.has("password") ? object.get("password").getAsString() : null;
-            Role role = object.has("role") ? context.deserialize(object.get("role"), Role.class) : null;
-            LocalDate birthDate = object.has("birth_date") ? context.deserialize(object.get("birth_date"), LocalDate.class) : null;
+            var fullName = getPropertyAsString(object, "full_name");
+            var username = getPropertyAsString(object, "username");
+            var password = getPropertyAsString(object, "password");
+            Role role = getPropertyAs(object, "role", Role.class, context);
+            LocalDate birthDate = getPropertyAs(object, "birth_date", LocalDate.class, context);
             var emailsArray = object.getAsJsonArray("email_addresses");
             List<String> emails = new ArrayList<>(emailsArray.size());
             for (var item : emailsArray) {
+                if (item.isJsonNull()) continue;
                 emails.add(item.getAsString());
             }
             return new User(fullName, username, password, birthDate, role, emails);

@@ -12,10 +12,10 @@ public class CredentialsDeserializer implements JsonDeserializer<Credentials> {
     public Credentials deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         try {
             var object = json.getAsJsonObject();
-            var username = object.has("user_id") ? object.get("user_id").getAsString() : null;
-            var password = object.has("password") ? object.get("password").getAsString() : null;
+            var username = object.get("user_id").getAsString();
+            var password = object.get("password").getAsString();
             return new Credentials(username, password);
-        } catch (ClassCastException e) {
+        } catch (ClassCastException | NullPointerException | UnsupportedOperationException e) {
             throw new JsonParseException("Invalid credentials: " + json, e);
         }
     }

@@ -47,8 +47,6 @@ public class ClientSideAuthenticator implements Authenticator {
     private <T> void marshallRequest(Socket socket, Request<T> request) throws IOException {
         try {
             var writer = new OutputStreamWriter(socket.getOutputStream());
-//            var all = gson.toJson(request);
-//            writer.append(all);
             gson.toJson(request, writer);
             writer.flush();
         } finally {

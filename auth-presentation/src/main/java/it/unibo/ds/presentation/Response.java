@@ -32,6 +32,7 @@ public class Response<T> {
     public Response(Status status, String message, T result) {
         this.status = status;
         this.message = message;
+        this.result = result;
     }
 
     public Status getStatus() {
