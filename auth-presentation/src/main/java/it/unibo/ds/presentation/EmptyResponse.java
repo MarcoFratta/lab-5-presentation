@@ -1,6 +1,6 @@
 package it.unibo.ds.presentation;
 
-public class EmptyResponse extends AuthResponse<Void> {
+public class EmptyResponse extends Response<Void> {
     public EmptyResponse() {
     }
 

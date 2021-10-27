@@ -1,6 +1,6 @@
 package it.unibo.ds.presentation;
 
-public class AuthorizeResponse extends AuthResponse<Token> {
+public class AuthorizeResponse extends Response<Token> {
     public AuthorizeResponse() {
     }
 

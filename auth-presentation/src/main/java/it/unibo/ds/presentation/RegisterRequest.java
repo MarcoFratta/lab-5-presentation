@@ -1,6 +1,6 @@
 package it.unibo.ds.presentation;
 
-public class RegisterRequest extends AuthRequest<User> {
+public class RegisterRequest extends Request<User> {
     public RegisterRequest() {
         this(null);
     }

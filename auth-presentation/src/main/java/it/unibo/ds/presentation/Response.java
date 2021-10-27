@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Objects;
 
-public class AuthResponse<T> {
+public class Response<T> {
     public enum Status {
         OK, BAD_CONTENT, CONFLICT, WRONG_CREDENTIALS;
     }
@@ -22,14 +22,14 @@ public class AuthResponse<T> {
     @SerializedName("result")
     private T result;
 
-    public AuthResponse() {
+    public Response() {
     }
 
-    public AuthResponse(Status status, String message) {
+    public Response(Status status, String message) {
         this(status, message, null);
     }
 
-    public AuthResponse(Status status, String message, T result) {
+    public Response(Status status, String message, T result) {
         this.status = status;
         this.message = message;
     }
@@ -62,7 +62,7 @@ public class AuthResponse<T> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AuthResponse response = (AuthResponse) o;
+        Response response = (Response) o;
         return status == response.status && Objects.equals(message, response.message) && Objects.equals(result, response.result);
     }
 

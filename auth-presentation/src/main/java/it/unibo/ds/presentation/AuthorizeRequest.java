@@ -1,6 +1,6 @@
 package it.unibo.ds.presentation;
 
-public class AuthorizeRequest extends AuthRequest<Credentials> {
+public class AuthorizeRequest extends Request<Credentials> {
     public AuthorizeRequest() {
         this(null);
     }

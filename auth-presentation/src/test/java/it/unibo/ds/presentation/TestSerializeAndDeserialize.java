@@ -36,7 +36,7 @@ public class TestSerializeAndDeserialize {
     );
 
     private final EmptyResponse registerGiovanniResponse = new EmptyResponse(
-            AuthResponse.Status.OK,
+            Response.Status.OK,
             "ok"
     );
 
@@ -46,7 +46,7 @@ public class TestSerializeAndDeserialize {
 
 
     private final AuthorizeResponse authorizeGiovanniResponse = new AuthorizeResponse(
-            AuthResponse.Status.OK,
+            Response.Status.OK,
             "ok",
             giovanniToken
     );
@@ -82,28 +82,28 @@ public class TestSerializeAndDeserialize {
     @Test
     public void testRegisterRequest() {
         String serialized = gson.toJson(registerGiovanniRequest);
-        AuthRequest<User> deserialized = gson.fromJson(serialized, RegisterRequest.class);
+        Request<User> deserialized = gson.fromJson(serialized, RegisterRequest.class);
         assertEquals(registerGiovanniRequest, deserialized);
     }
 
     @Test
     public void testRegisterResponse() {
         String serialized = gson.toJson(registerGiovanniResponse);
-        AuthResponse<Void> deserialized = gson.fromJson(serialized, EmptyResponse.class);
+        Response<Void> deserialized = gson.fromJson(serialized, EmptyResponse.class);
         assertEquals(registerGiovanniResponse, deserialized);
     }
 
     @Test
     public void testAuthorizeRequest() {
         String serialized = gson.toJson(authorizeGiovanniRequest);
-        AuthRequest<Credentials> deserialized = gson.fromJson(serialized, AuthorizeRequest.class);
+        Request<Credentials> deserialized = gson.fromJson(serialized, AuthorizeRequest.class);
         assertEquals(authorizeGiovanniRequest, deserialized);
     }
 
     @Test
     public void testAuthorizeResponse() {
         String serialized = gson.toJson(authorizeGiovanniResponse);
-        AuthResponse<Token> deserialized = gson.fromJson(serialized, AuthorizeResponse.class);
+        Response<Token> deserialized = gson.fromJson(serialized, AuthorizeResponse.class);
         assertEquals(authorizeGiovanniResponse, deserialized);
     }
 

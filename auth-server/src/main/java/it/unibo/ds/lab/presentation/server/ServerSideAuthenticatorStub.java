@@ -9,7 +9,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class ServerSideAuthenticatorStub extends Thread {
 
@@ -32,37 +31,37 @@ public class ServerSideAuthenticatorStub extends Thread {
         }
     }
 
-    private AuthRequest<?> unmarshallRequest(Socket socket) throws IOException {
+    private Request<?> unmarshallRequest(Socket socket) throws IOException {
         try {
             var reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            return gson.fromJson(reader, AuthRequest.class);
+            return gson.fromJson(reader, Request.class);
         } finally {
             socket.shutdownInput();
         }
     }
 
-    private AuthResponse<?> computeResponse(AuthRequest<?> invocation) {
+    private Response<?> computeResponse(Request<?> invocation) {
         try {
             switch (invocation.getMethod()) {
                 case "authorize":
                     var token = delegate.authorize((Credentials) invocation.getArgument());
-                    return new AuthResponse<>(AuthResponse.Status.OK, "ok", token);
+                    return new Response<>(Response.Status.OK, "ok", token);
                 case "register":
                     delegate.register((User) invocation.getArgument());
-                    return new AuthResponse<>(AuthResponse.Status.OK, "ok");
+                    return new Response<>(Response.Status.OK, "ok");
                 default:
-                    return new AuthResponse<>(AuthResponse.Status.BAD_CONTENT, "no such method: " + invocation.getMethod());
+                    return new Response<>(Response.Status.BAD_CONTENT, "no such method: " + invocation.getMethod());
             }
         } catch (BadContentException e) {
-            return new AuthResponse<>(AuthResponse.Status.BAD_CONTENT, e.getMessage());
+            return new Response<>(Response.Status.BAD_CONTENT, e.getMessage());
         } catch (WrongCredentialsException e) {
-            return new AuthResponse<>(AuthResponse.Status.WRONG_CREDENTIALS, e.getMessage());
+            return new Response<>(Response.Status.WRONG_CREDENTIALS, e.getMessage());
         } catch (ConflictException e) {
-            return new AuthResponse<>(AuthResponse.Status.CONFLICT, e.getMessage());
+            return new Response<>(Response.Status.CONFLICT, e.getMessage());
         }
     }
 
-    private void marshallResponse(Socket socket, AuthResponse<?> response) throws IOException {
+    private void marshallResponse(Socket socket, Response<?> response) throws IOException {
         try {
             var writer = new OutputStreamWriter(socket.getOutputStream());
             gson.toJson(response, writer);

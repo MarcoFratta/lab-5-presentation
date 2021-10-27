@@ -34,7 +34,7 @@ public class ClientSideAuthenticator implements Authenticator {
         }
     }
 
-    private <T, R> R rpc(AuthRequest<T> request, Class<? extends AuthResponse<R>> responseType) throws BadContentException, ConflictException, WrongCredentialsException {
+    private <T, R> R rpc(Request<T> request, Class<? extends Response<R>> responseType) throws BadContentException, ConflictException, WrongCredentialsException {
         try (var socket = new Socket()) {
             socket.connect(server);
             marshallRequest(socket, request);
@@ -44,7 +44,7 @@ public class ClientSideAuthenticator implements Authenticator {
         }
     }
 
-    private <T> void marshallRequest(Socket socket, AuthRequest<T> request) throws IOException {
+    private <T> void marshallRequest(Socket socket, Request<T> request) throws IOException {
         try {
             var writer = new OutputStreamWriter(socket.getOutputStream());
 //            var all = gson.toJson(request);
@@ -56,7 +56,7 @@ public class ClientSideAuthenticator implements Authenticator {
         }
     }
 
-    private <T> T unmarshallResponse(Socket socket, Class<? extends AuthResponse<T>> responseType) throws IOException, BadContentException, ConflictException, WrongCredentialsException {
+    private <T> T unmarshallResponse(Socket socket, Class<? extends Response<T>> responseType) throws IOException, BadContentException, ConflictException, WrongCredentialsException {
         try {
             var reader = new InputStreamReader(socket.getInputStream());
             var response = gson.fromJson(reader, responseType);
