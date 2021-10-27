@@ -1,0 +1,12 @@
+image: gradle:7.2-jdk11
+
+variables:
+  GOPTS: "--no-daemon --console=plain"
+
+build:
+  stage: build
+  script: gradle classes testClasses javadoc $GOPTS
+
+test:
+  stage: test
+  script: gradle check $GOPTS
