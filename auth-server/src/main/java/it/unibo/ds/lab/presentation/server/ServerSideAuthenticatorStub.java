@@ -65,6 +65,7 @@ public class ServerSideAuthenticatorStub extends Thread {
         try {
             var writer = new OutputStreamWriter(socket.getOutputStream());
             gson.toJson(response, writer);
+            writer.flush();
         } finally {
             socket.shutdownOutput();
         }

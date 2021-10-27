@@ -20,6 +20,7 @@ public class GsonUtils {
                 .registerTypeAdapter(Role.class, new RoleDeserializer())
                 .registerTypeAdapter(LocalDate.class, new LocalDateSerializer())
                 .registerTypeAdapter(LocalDate.class, new LocalDateDeserializer())
+                .registerTypeAdapter(Request.class, new RequestDeserializer())
                 .create();
     }
 }

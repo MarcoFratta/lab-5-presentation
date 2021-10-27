@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDeserializer implements JsonDeserializer<User> {
+
     @Override
     public User deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         try {
