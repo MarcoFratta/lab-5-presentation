@@ -4,7 +4,6 @@ plugins {
 
 allprojects {
     repositories {
-        // Use Maven Central for resolving dependencies.
         mavenCentral()
     }
 
@@ -16,12 +15,14 @@ subprojects {
     apply(plugin = "java")
 
     dependencies {
-        // Use JUnit Jupiter for testing.
         testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     }
 
     tasks.test {
-        // Use JUnit Platform for unit tests.
         useJUnitPlatform()
     }
+}
+
+dependencies {
+    implementation("com.google.code.gson:gson:2.8.8")
 }
