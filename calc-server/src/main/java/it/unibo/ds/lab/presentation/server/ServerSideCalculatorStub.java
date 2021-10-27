@@ -21,7 +21,7 @@ public class ServerSideCalculatorStub extends Thread {
     @Override
     public void run() {
         try (ephemeralSocket) {
-            var invocation = unmarshalInvocation(ephemeralSocket);
+            var invocation = unmarshallInvocation(ephemeralSocket);
             var result = computeResult(invocation);
             marshallResult(ephemeralSocket, result);
         } catch (IOException e) {
@@ -29,7 +29,7 @@ public class ServerSideCalculatorStub extends Thread {
         }
     }
 
-    private CalculatorInvocation unmarshalInvocation(Socket socket) throws IOException {
+    private CalculatorInvocation unmarshallInvocation(Socket socket) throws IOException {
         try {
             var input = new DataInputStream(socket.getInputStream());
             var method = input.readUTF();
@@ -76,6 +76,7 @@ public class ServerSideCalculatorStub extends Thread {
             if (result.getResult() != null) {
                 output.writeDouble(result.getResult());
             }
+            output.flush();
         } finally {
             socket.shutdownOutput();
         }

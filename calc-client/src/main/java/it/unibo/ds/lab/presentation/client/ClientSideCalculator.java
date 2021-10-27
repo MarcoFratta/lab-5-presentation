@@ -55,6 +55,7 @@ public class ClientSideCalculator implements Calculator {
             for (var x : others) {
                 output.writeDouble(x);
             }
+            output.flush();
         } finally {
             socket.shutdownOutput();
         }
