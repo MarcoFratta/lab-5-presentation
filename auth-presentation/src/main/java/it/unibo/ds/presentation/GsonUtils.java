@@ -3,6 +3,8 @@ package it.unibo.ds.presentation;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.time.LocalDate;
+
 public class GsonUtils {
     public static Gson createGson() {
         return new GsonBuilder()
@@ -16,6 +18,8 @@ public class GsonUtils {
                 .registerTypeAdapter(Token.class, new TokenDeserializer())
                 .registerTypeAdapter(Role.class, new RoleSerializer())
                 .registerTypeAdapter(Role.class, new RoleDeserializer())
+                .registerTypeAdapter(LocalDate.class, new LocalDateSerializer())
+                .registerTypeAdapter(LocalDate.class, new LocalDateDeserializer())
                 .create();
     }
 }

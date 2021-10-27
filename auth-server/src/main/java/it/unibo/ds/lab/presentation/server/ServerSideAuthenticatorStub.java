@@ -3,11 +3,13 @@ package it.unibo.ds.lab.presentation.server;
 import com.google.gson.Gson;
 import it.unibo.ds.presentation.*;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class ServerSideAuthenticatorStub extends Thread {
 
@@ -30,23 +32,23 @@ public class ServerSideAuthenticatorStub extends Thread {
         }
     }
 
-    private AuthRequest unmarshallRequest(Socket socket) throws IOException {
+    private AuthRequest<?> unmarshallRequest(Socket socket) throws IOException {
         try {
-            var reader = new InputStreamReader(socket.getInputStream());
+            var reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             return gson.fromJson(reader, AuthRequest.class);
         } finally {
             socket.shutdownInput();
         }
     }
 
-    private AuthResponse<?> computeResponse(AuthRequest invocation) {
+    private AuthResponse<?> computeResponse(AuthRequest<?> invocation) {
         try {
             switch (invocation.getMethod()) {
                 case "authorize":
-                    var token = delegate.authorize((Credentials) invocation.getArgs().get(0));
+                    var token = delegate.authorize((Credentials) invocation.getArgument());
                     return new AuthResponse<>(AuthResponse.Status.OK, "ok", token);
                 case "register":
-                    delegate.register((User) invocation.getArgs().get(0));
+                    delegate.register((User) invocation.getArgument());
                     return new AuthResponse<>(AuthResponse.Status.OK, "ok");
                 default:
                     return new AuthResponse<>(AuthResponse.Status.BAD_CONTENT, "no such method: " + invocation.getMethod());

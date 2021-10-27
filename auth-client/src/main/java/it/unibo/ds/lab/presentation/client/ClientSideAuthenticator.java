@@ -1,7 +1,6 @@
 package it.unibo.ds.lab.presentation.client;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import it.unibo.ds.presentation.*;
 
 import java.io.*;
@@ -20,7 +19,7 @@ public class ClientSideAuthenticator implements Authenticator {
     @Override
     public void register(User user) throws BadContentException, ConflictException {
         try {
-            rpc(new TypeToken<AuthResponse<User>>(){}, "register", user);
+            rpc(new RegisterRequest(user), EmptyResponse.class);
         } catch (WrongCredentialsException e) {
             throw new IllegalStateException("Inconsistent behaviour of server: unexpected WrongCredentialsException", e);
         }
@@ -29,36 +28,38 @@ public class ClientSideAuthenticator implements Authenticator {
     @Override
     public Token authorize(Credentials credentials) throws BadContentException, WrongCredentialsException {
         try {
-            return rpc(new TypeToken<>(){}, "authorize", credentials);
+            return rpc(new AuthorizeRequest(credentials), AuthorizeResponse.class);
         } catch (ConflictException e) {
             throw new IllegalStateException("Inconsistent behaviour of server: unexpected ConflictException", e);
         }
     }
 
-    private <T> T rpc(TypeToken<AuthResponse<T>> typeToken, String method, Object... args) throws BadContentException, ConflictException, WrongCredentialsException {
+    private <T, R> R rpc(AuthRequest<T> request, Class<? extends AuthResponse<R>> responseType) throws BadContentException, ConflictException, WrongCredentialsException {
         try (var socket = new Socket()) {
             socket.connect(server);
-            marshallRequest(socket, method, args);
-            return unmarshallResponse(socket, typeToken);
+            marshallRequest(socket, request);
+            return unmarshallResponse(socket, responseType);
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
     }
 
-    private void marshallRequest(Socket socket, String method, Object... args) throws IOException {
+    private <T> void marshallRequest(Socket socket, AuthRequest<T> request) throws IOException {
         try {
             var writer = new OutputStreamWriter(socket.getOutputStream());
-            var request = new AuthRequest(method, args);
+//            var all = gson.toJson(request);
+//            writer.append(all);
             gson.toJson(request, writer);
+            writer.flush();
         } finally {
             socket.shutdownOutput();
         }
     }
 
-    private <T> T unmarshallResponse(Socket socket, TypeToken<AuthResponse<T>> typeToken) throws IOException, BadContentException, ConflictException, WrongCredentialsException {
+    private <T> T unmarshallResponse(Socket socket, Class<? extends AuthResponse<T>> responseType) throws IOException, BadContentException, ConflictException, WrongCredentialsException {
         try {
             var reader = new InputStreamReader(socket.getInputStream());
-            AuthResponse<T> response = gson.fromJson(reader, typeToken.getType());
+            var response = gson.fromJson(reader, responseType);
             switch (response.getStatus()) {
                 case OK:
                     return response.getResult();

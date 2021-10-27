@@ -7,55 +7,50 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public final class AuthRequest {
+public class AuthRequest<T> {
 
     @Expose
     @SerializedName("method")
     private String method;
 
     @Expose
-    @SerializedName("args")
-    private List<Object> args;
+    @SerializedName("argument")
+    private T argument;
 
     public AuthRequest() {
     }
 
-    public AuthRequest(String method, List<Object> args) {
+    public AuthRequest(String method, T argument) {
         this.method = method;
-        this.args = args;
+        this.argument = argument;
     }
-
-    public AuthRequest(String method, Object... args) {
-        this(method, Arrays.asList(args));
-    }
-
 
     public String getMethod() {
         return method;
     }
 
-    public List<Object> getArgs() {
-        return args;
+    public T getArgument() {
+        return argument;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AuthRequest request = (AuthRequest) o;
-        return Objects.equals(method, request.method) && Objects.equals(args, request.args);
+        AuthRequest<?> that = (AuthRequest<?>) o;
+        return Objects.equals(method, that.method) && Objects.equals(argument, that.argument);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(method, args);
+        return Objects.hash(method, argument);
     }
 
     @Override
     public String toString() {
-        return "Request{" +
+        return "AuthRequest{" +
                 "method='" + method + '\'' +
-                ", args=" + args +
+                ", argument=" + argument +
                 '}';
     }
 }
