@@ -1,0 +1,82 @@
+package it.unibo.ds.presentation;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.Objects;
+
+public class AuthResponse<T> {
+    public enum Status {
+        OK, BAD_CONTENT, CONFLICT, WRONG_CREDENTIALS;
+    }
+
+    @Expose
+    @SerializedName("status")
+    private Status status;
+
+    @Expose
+    @SerializedName("message")
+    private String message;
+
+    @Expose
+    @SerializedName("result")
+    private T result;
+
+    public AuthResponse() {
+    }
+
+    public AuthResponse(Status status, String message) {
+        this(status, message, null);
+    }
+
+    public AuthResponse(Status status, String message, T result) {
+        this.status = status;
+        this.message = message;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public T getResult() {
+        return result;
+    }
+
+    public void setResult(T result) {
+        this.result = result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AuthResponse response = (AuthResponse) o;
+        return status == response.status && Objects.equals(message, response.message) && Objects.equals(result, response.result);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(status, message, result);
+    }
+
+    @Override
+    public String toString() {
+        return "Response{" +
+                "status=" + status +
+                ", message='" + message + '\'' +
+                ", result=" + result +
+                '}';
+    }
+}
