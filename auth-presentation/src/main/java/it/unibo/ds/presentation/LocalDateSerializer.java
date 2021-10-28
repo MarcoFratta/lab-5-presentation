@@ -12,10 +12,6 @@ public class LocalDateSerializer implements JsonSerializer<LocalDate> {
 
     @Override
     public JsonElement serialize(LocalDate src, Type typeOfSrc, JsonSerializationContext context) {
-        var object = new JsonObject();
-        object.addProperty("year", src.getYear());
-        object.addProperty("month", src.getMonth().name().toLowerCase());
-        object.addProperty("day", src.getDayOfMonth());
-        return object;
+        throw new Error("not implemented");
     }
 }

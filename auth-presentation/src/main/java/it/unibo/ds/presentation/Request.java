@@ -22,33 +22,4 @@ public class Request<T> {
         this.method = method;
         this.argument = argument;
     }
-
-    public String getMethod() {
-        return method;
-    }
-
-    public T getArgument() {
-        return argument;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Request<?> that = (Request<?>) o;
-        return Objects.equals(method, that.method) && Objects.equals(argument, that.argument);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(method, argument);
-    }
-
-    @Override
-    public String toString() {
-        return "Request{" +
-                "method='" + method + '\'' +
-                ", argument=" + argument +
-                '}';
-    }
 }

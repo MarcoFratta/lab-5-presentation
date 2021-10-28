@@ -30,54 +30,6 @@ public class Response<T> {
     }
 
     public Response(Status status, String message, T result) {
-        this.status = status;
-        this.message = message;
-        this.result = result;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public T getResult() {
-        return result;
-    }
-
-    public void setResult(T result) {
-        this.result = result;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Response response = (Response) o;
-        return status == response.status && Objects.equals(message, response.message) && Objects.equals(result, response.result);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(status, message, result);
-    }
-
-    @Override
-    public String toString() {
-        return "Response{" +
-                "status=" + status +
-                ", message='" + message + '\'' +
-                ", result=" + result +
-                '}';
+        throw new Error("not implemented");
     }
 }

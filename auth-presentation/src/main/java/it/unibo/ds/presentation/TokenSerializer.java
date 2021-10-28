@@ -11,9 +11,6 @@ public class TokenSerializer implements JsonSerializer<Token> {
 
     @Override
     public JsonElement serialize(Token src, Type typeOfSrc, JsonSerializationContext context) {
-        var object = new JsonObject();
-        object.addProperty("username", src.getUsername());
-        object.add("role", context.serialize(src.getRole()));
-        return object;
+        throw new Error("not implemented");
     }
 }

@@ -10,17 +10,7 @@ public class GsonUtils {
         return new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
                 .serializeNulls()
-                .registerTypeAdapter(User.class, new UserSerializer())
-                .registerTypeAdapter(User.class, new UserDeserializer())
-                .registerTypeAdapter(Credentials.class, new CredentialsSerializer())
-                .registerTypeAdapter(Credentials.class, new CredentialsDeserializer())
-                .registerTypeAdapter(Token.class, new TokenSerializer())
-                .registerTypeAdapter(Token.class, new TokenDeserializer())
-                .registerTypeAdapter(Role.class, new RoleSerializer())
-                .registerTypeAdapter(Role.class, new RoleDeserializer())
-                .registerTypeAdapter(LocalDate.class, new LocalDateSerializer())
-                .registerTypeAdapter(LocalDate.class, new LocalDateDeserializer())
-                .registerTypeAdapter(Request.class, new RequestDeserializer())
+                // TODO initialize serializers and deserializers
                 .create();
     }
 }

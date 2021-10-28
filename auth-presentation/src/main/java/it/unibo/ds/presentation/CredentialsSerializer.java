@@ -8,9 +8,6 @@ public class CredentialsSerializer implements JsonSerializer<Credentials> {
 
     @Override
     public JsonElement serialize(Credentials src, Type typeOfSrc, JsonSerializationContext context) {
-        var object = new JsonObject();
-        object.addProperty("user_id", src.getUserId());
-        object.addProperty("password", src.getPassword());
-        return object;
+        throw new Error("not implemented");
     }
 }

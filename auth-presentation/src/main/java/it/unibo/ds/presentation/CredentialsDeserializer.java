@@ -10,13 +10,6 @@ import java.lang.reflect.Type;
 public class CredentialsDeserializer implements JsonDeserializer<Credentials> {
     @Override
     public Credentials deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        try {
-            var object = json.getAsJsonObject();
-            var username = object.get("user_id").getAsString();
-            var password = object.get("password").getAsString();
-            return new Credentials(username, password);
-        } catch (ClassCastException | NullPointerException | UnsupportedOperationException e) {
-            throw new JsonParseException("Invalid credentials: " + json, e);
-        }
+        throw new Error("not implemented");
     }
 }

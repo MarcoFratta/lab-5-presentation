@@ -10,7 +10,6 @@ import java.net.Socket;
 public class ClientSideAuthenticator implements Authenticator {
 
     private final InetSocketAddress server;
-    private final Gson gson = GsonUtils.createGson();
 
     public ClientSideAuthenticator(String host, int port) {
         this.server = new InetSocketAddress(host, port);
@@ -45,33 +44,10 @@ public class ClientSideAuthenticator implements Authenticator {
     }
 
     private <T> void marshallRequest(Socket socket, Request<T> request) throws IOException {
-        try {
-            var writer = new OutputStreamWriter(socket.getOutputStream());
-            gson.toJson(request, writer);
-            writer.flush();
-        } finally {
-            socket.shutdownOutput();
-        }
+        throw new Error("not implemented");
     }
 
     private <T> T unmarshallResponse(Socket socket, Class<? extends Response<T>> responseType) throws IOException, BadContentException, ConflictException, WrongCredentialsException {
-        try {
-            var reader = new InputStreamReader(socket.getInputStream());
-            var response = gson.fromJson(reader, responseType);
-            switch (response.getStatus()) {
-                case OK:
-                    return response.getResult();
-                case BAD_CONTENT:
-                    throw new BadContentException(response.getMessage());
-                case CONFLICT:
-                    throw new ConflictException(response.getMessage());
-                case WRONG_CREDENTIALS:
-                    throw new WrongCredentialsException(response.getMessage());
-                default:
-                    throw new IllegalStateException("This should never happen");
-            }
-        } finally {
-            socket.shutdownInput();
-        }
+        throw new Error("not implemented");
     }
 }

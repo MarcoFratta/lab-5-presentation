@@ -29,22 +29,6 @@ public class UserDeserializer implements JsonDeserializer<User> {
 
     @Override
     public User deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        try {
-            var object = json.getAsJsonObject();
-            var fullName = getPropertyAsString(object, "full_name");
-            var username = getPropertyAsString(object, "username");
-            var password = getPropertyAsString(object, "password");
-            Role role = getPropertyAs(object, "role", Role.class, context);
-            LocalDate birthDate = getPropertyAs(object, "birth_date", LocalDate.class, context);
-            var emailsArray = object.getAsJsonArray("email_addresses");
-            List<String> emails = new ArrayList<>(emailsArray.size());
-            for (var item : emailsArray) {
-                if (item.isJsonNull()) continue;
-                emails.add(item.getAsString());
-            }
-            return new User(fullName, username, password, birthDate, role, emails);
-        } catch (ClassCastException e) {
-            throw new JsonParseException("Invalid user: " + json, e);
-        }
+        throw new Error("not implemented");
     }
 }
