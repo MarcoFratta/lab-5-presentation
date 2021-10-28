@@ -1,20 +1,40 @@
-package it.unibo.ds.presentation;
+package it.unibo.ds.lab.presentation;
 
+import it.unibo.ds.presentation.Calculator;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TestLocalCalculator {
+public abstract class AbstractTestCalculator {
 
     private Calculator calculator;
     private static final double[] numbers = new double[] { 5, 4, 3, 2, 1 };
 
     @BeforeEach
-    public void setup() {
-        calculator = new LocalCalculator();
+    public void setup() throws IOException {
+        beforeCreatingCalculator();
+        calculator = createCalculator();
     }
+
+
+    protected abstract void beforeCreatingCalculator() throws IOException;
+
+    protected abstract Calculator createCalculator();
+
+    @AfterEach
+    public final void teardown() throws InterruptedException {
+        shutdownCalculator(calculator);
+        afterShuttingCalculatorDown();
+    }
+
+    protected abstract void shutdownCalculator(Calculator calculator);
+
+    protected abstract void afterShuttingCalculatorDown() throws InterruptedException;
 
     @Test
     public void testSum() {
