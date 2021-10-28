@@ -30,55 +30,14 @@ public class ServerSideCalculatorStub extends Thread {
     }
 
     private CalculatorInvocation unmarshallInvocation(Socket socket) throws IOException {
-        try {
-            var input = new DataInputStream(socket.getInputStream());
-            var method = input.readUTF();
-            var argsLength = input.readInt();
-
-            if (argsLength <= 0) return null;
-
-            var first = input.readDouble();
-            var others = new double[argsLength - 1];
-            for (int i = 1; i < argsLength; i++) {
-                others[i - 1] = input.readDouble();
-            }
-
-            return new CalculatorInvocation(method, first, others);
-        } finally {
-            socket.shutdownInput();
-        }
+        throw new Error("not implemented");
     }
 
     private CalculatorResult computeResult(CalculatorInvocation invocation) {
-        if (invocation == null) return CalculatorResult.malformedRequest();
-        try {
-            switch (invocation.getMethod()) {
-                case "sum":
-                    return CalculatorResult.success(delegate.sum(invocation.getFirstArg(), invocation.getOtherArgs()));
-                case "subtract":
-                    return CalculatorResult.success(delegate.subtract(invocation.getFirstArg(), invocation.getOtherArgs()));
-                case "multiply":
-                    return CalculatorResult.success(delegate.multiply(invocation.getFirstArg(), invocation.getOtherArgs()));
-                case "divide":
-                    return CalculatorResult.success(delegate.divide(invocation.getFirstArg(), invocation.getOtherArgs()));
-                default:
-                    return CalculatorResult.malformedRequest();
-            }
-        } catch (ArithmeticException e) {
-            return CalculatorResult.divideByZero();
-        }
+        throw new Error("not implemented");
     }
 
     private void marshallResult(Socket socket, CalculatorResult result) throws IOException {
-        try {
-            var output = new DataOutputStream(socket.getOutputStream());
-            output.writeInt(result.getStatus());
-            if (result.getResult() != null) {
-                output.writeDouble(result.getResult());
-            }
-            output.flush();
-        } finally {
-            socket.shutdownOutput();
-        }
+        throw new Error("not implemented");
     }
 }

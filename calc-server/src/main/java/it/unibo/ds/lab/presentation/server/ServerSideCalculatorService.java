@@ -1,11 +1,8 @@
 package it.unibo.ds.lab.presentation.server;
 
-import it.unibo.ds.presentation.Calculator;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.SocketException;
-import java.util.Objects;
 
 public class ServerSideCalculatorService extends Thread {
 

@@ -37,7 +37,7 @@ public class ClientSideCalculator implements Calculator {
     }
 
     private double rpc(String method, double first, double... others) {
-        try(var socket = new Socket()) {
+        try (var socket = new Socket()) {
             socket.connect(server);
             marshallInvocation(socket, method, first, others);
             return unmarshallResult(socket);
@@ -47,33 +47,10 @@ public class ClientSideCalculator implements Calculator {
     }
 
     private void marshallInvocation(Socket socket, String method, double first, double... others) throws IOException {
-        try {
-            var output = new DataOutputStream(socket.getOutputStream());
-            output.writeUTF(method);
-            output.writeInt(others.length + 1);
-            output.writeDouble(first);
-            for (var x : others) {
-                output.writeDouble(x);
-            }
-            output.flush();
-        } finally {
-            socket.shutdownOutput();
-        }
+        throw new Error("not implemented");
     }
 
     private double unmarshallResult(Socket socket) throws IOException {
-        try {
-            var input = new DataInputStream(socket.getInputStream());
-            var status = input.readInt();
-            if (status == 0) {
-                return input.readDouble();
-            } else if (status == 1) {
-                throw new ArithmeticException("Cannot divide by 0.0");
-            } else {
-                throw new IllegalArgumentException("Invalid request");
-            }
-        } finally {
-            socket.shutdownInput();
-        }
+        throw new Error("not implemented");
     }
 }
