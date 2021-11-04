@@ -16,13 +16,8 @@
      *  they essentially exploit the RPC pattern to support such remote implementation
    - `:calc-test` provides unit tests for the above
    - Their dependencies are provided below:
-       ```
-       dependencies of project :calc-test
-       +--- project :calc-client
-       |    \--- project :calc-common
-       \--- project :calc-server
-            \--- project :calc-common
-       ```
+
+       ![`calc-*` dependencies](http://www.plantuml.com/plantuml/svg/SoWkIImgAStDuKhEpot8pqlDAr5GiafEp4dM1GhavkSfAIGMAq2Oc4gAKulAKel0IY1CBARaP09vO2KG9gQIajHYY08GWuiBOfc2JOskBjnKX13C50W55eBeWoX54d18pKi1UWm0)
    
 2. The remote implementation attempts to highlight the client and server stubs of a RPC solution aimed at performing basic calculations
     - A custom transport protocol is used for data exchange, implemented via Sockets
@@ -45,17 +40,8 @@
     - `:auth-presentation` provides (de)serialization facilities to be used by both `:auth-client` and `:auth-server`
     - `:auth-test` provides unit tests for the above
     - Their dependencies are provided below:
-        ```
-        dependencies of project :auth-test
-        +--- project :auth-client
-        |    +--- project :auth-common
-        |    \--- project :auth-presentation
-        |         +--- project :auth-common
-        |         \--- com.google.code.gson:gson:2.8.8
-        \--- project :auth-server
-             +--- project :auth-common
-             \--- project :auth-presentation (*)
-        ```
+    
+        ![`auth-*` dependencies](http://www.plantuml.com/plantuml/svg/POz1peKW38JtdeAunmCOOxmAqGPDW1fQ__oBT_W7r0KltP3fp9SEtOXTvYU6OSTuOuB4PfpTmwSjHiGq6aT6f4Rk35H6nzSBzaQF5pbvH1zWsl60oHEckJwZMHRuPyZ9XNMjAwghcmZo7-JM8L8ZUxZAr12H6c4W0QeO1ZdBB1zhVt_U3n9BgGxUAXNaovzivHX16Yx5igmpDaZ74yCN)
 
 2. The remote implementation attempts to highlight the client and server stubs of a RPC solution aimed at performing basic calculations
     - A custom transport protocol is used for data exchange, implemented via Sockets
