@@ -13,13 +13,7 @@ public class TestLocalAuthenticator extends AbstractTestAuthenticator {
 
     @Override
     protected Authenticator createAuthenticator() throws BadContentException, ConflictException {
-        var authenticator = new LocalAuthenticator();
-
-        authenticator.register(giovanni);
-        authenticator.register(andrea);
-        authenticator.register(stefano);
-
-        return authenticator;
+        return new LocalAuthenticator();
     }
 
     @Override

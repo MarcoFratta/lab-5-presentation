@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class AbstractTestAuthenticator {
 
-    protected final User giovanni = new User(
+    private final User giovanni = new User(
             "Giovanni Ciatto",
             "gciatto",
             "password.",
@@ -28,7 +28,7 @@ public abstract class AbstractTestAuthenticator {
             "giovanni.ciatto@studio.unibo.it"
         );
 
-    protected final User andrea = new User(
+    private final User andrea = new User(
             "Andrea Omicini",
             "aomicini",
             "123456!",
@@ -37,7 +37,7 @@ public abstract class AbstractTestAuthenticator {
             "andrea.omicini@unibo.it"
     );
 
-    protected final User stefano = new User(
+    private final User stefano = new User(
             null,
             "stemar",
             "987abc!",
@@ -46,7 +46,7 @@ public abstract class AbstractTestAuthenticator {
             "stefano.mariani@unibo.it"
     );
 
-    protected final User noUser = new User(
+    private final User noUser = new User(
             null,
             null,
             "987abc!",
@@ -54,7 +54,7 @@ public abstract class AbstractTestAuthenticator {
             null
     );
 
-    protected final User noPassword = new User(
+    private final User noPassword = new User(
             null,
             "someone",
             null,
@@ -62,7 +62,7 @@ public abstract class AbstractTestAuthenticator {
             null
     );
 
-    protected final User noEmail = new User(
+    private final User noEmail = new User(
             null,
             "someone",
             "password",
@@ -76,6 +76,10 @@ public abstract class AbstractTestAuthenticator {
     public final void setup() throws BadContentException, ConflictException, IOException {
         beforeCreatingAuthenticator();
         authenticator = createAuthenticator();
+
+        authenticator.register(giovanni);
+        authenticator.register(andrea);
+        authenticator.register(stefano);
     }
 
     protected abstract void beforeCreatingAuthenticator() throws IOException;

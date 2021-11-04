@@ -23,13 +23,7 @@ public class TestRemoteAuthenticator extends AbstractTestAuthenticator {
 
     @Override
     protected Authenticator createAuthenticator() throws BadContentException, ConflictException {
-        var authenticator = new ClientSideAuthenticator("localhost", port);
-
-        authenticator.register(giovanni);
-        authenticator.register(andrea);
-        authenticator.register(stefano);
-
-        return authenticator;
+        return new ClientSideAuthenticator("localhost", port);
     }
 
     @Override
