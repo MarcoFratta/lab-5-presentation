@@ -47,10 +47,32 @@ public class ClientSideCalculator implements Calculator {
     }
 
     private void marshallInvocation(Socket socket, String method, double first, double... others) throws IOException {
-        throw new Error("not implemented");
+        DataOutputStream output = new DataOutputStream(socket.getOutputStream());
+        output.writeUTF(method);
+        output.writeDouble(first);
+        output.writeInt(others.length);
+        for(double o : others){
+            output.writeDouble(o);
+        }
+        socket.shutdownOutput();
     }
 
     private double unmarshallResult(Socket socket) throws IOException {
-        throw new Error("not implemented");
+        try {
+            DataInputStream input = new DataInputStream(socket.getInputStream());
+            int status = input.readInt();
+            switch (status){
+                case 0:
+                    return input.readDouble();
+                case 1:
+                    throw new Error("Bad client implementation");
+                case 3:
+                    throw new ArithmeticException();
+                default:
+                    throw new IllegalStateException();
+            }
+        }finally {
+            socket.shutdownInput();
+        }
     }
 }

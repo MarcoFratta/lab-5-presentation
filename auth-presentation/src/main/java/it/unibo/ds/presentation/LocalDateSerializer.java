@@ -12,6 +12,11 @@ public class LocalDateSerializer implements JsonSerializer<LocalDate> {
 
     @Override
     public JsonElement serialize(LocalDate src, Type typeOfSrc, JsonSerializationContext context) {
-        throw new Error("not implemented");
+        if (src == null) return null;
+        JsonObject object = new JsonObject();
+        object.addProperty("year", src.getYear());
+        object.addProperty("month", src.getMonthValue());
+        object.addProperty("day", src.getDayOfMonth());
+        return object;
     }
 }

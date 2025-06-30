@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -103,7 +104,7 @@ public class TestSerializeAndDeserialize {
 
     @Test
     public void testUser() {
-        for (var user : List.of(giovanniUser, andreaUser, stefanoUser, noUsernameUser, noEmailUser, noPasswordUser)) {
+        for (User user : Arrays.asList(giovanniUser, andreaUser, stefanoUser, noUsernameUser, noEmailUser, noPasswordUser)) {
             String serialized = gson.toJson(user);
             User deserialized = gson.fromJson(serialized, User.class);
             assertEquals(user, deserialized);
@@ -129,13 +130,15 @@ public class TestSerializeAndDeserialize {
     public void testRegisterRequest() {
         String serialized = gson.toJson(registerGiovanniRequest);
         Request<User> deserialized = gson.fromJson(serialized, RegisterRequest.class);
+        System.out.println("Deserialized: " + deserialized);
+        System.out.println("Original: " + registerGiovanniRequest);
         assertEquals(registerGiovanniRequest, deserialized);
     }
 
     @Test
     public void testRegisterResponse() {
         String serialized = gson.toJson(registerGiovanniResponse);
-        Response<Void> deserialized = gson.fromJson(serialized, EmptyResponse.class);
+        EmptyResponse deserialized = gson.fromJson(serialized, EmptyResponse.class);
         assertEquals(registerGiovanniResponse, deserialized);
     }
 

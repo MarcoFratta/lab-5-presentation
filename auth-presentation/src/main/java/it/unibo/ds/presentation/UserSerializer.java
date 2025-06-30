@@ -8,12 +8,12 @@ public class UserSerializer implements JsonSerializer<User> {
 
     @Override
     public JsonElement serialize(User src, Type typeOfSrc, JsonSerializationContext context) {
-        var object = new JsonObject();
+        JsonObject object = new JsonObject();
         object.addProperty("username", src.getUsername());
         object.addProperty("full_name", src.getFullName());
         object.addProperty("password", src.getPassword());
-        var emails = new JsonArray();
-        for (var email : src.getEmailAddresses()) {
+        JsonArray emails = new JsonArray();
+        for (String email : src.getEmailAddresses()) {
             emails.add(new JsonPrimitive(email));
         }
         object.add("email_addresses", emails);

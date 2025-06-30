@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class TestDistributedCalculator extends AbstractTestCalculator {
 
     private ServerSideCalculatorService service;
-    private static final int port = 10000;
+    private static final int port = 10001;
 
 
     @Override

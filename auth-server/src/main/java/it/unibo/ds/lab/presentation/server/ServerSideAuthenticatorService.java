@@ -13,34 +13,34 @@ public class ServerSideAuthenticatorService extends Thread {
     private volatile boolean shouldTerminate = false;
     private final Authenticator localAuthenticator = new LocalAuthenticator();
 
-    public ServerSideAuthenticatorService(int port) throws IOException {
+    public ServerSideAuthenticatorService(final int port) throws IOException {
         this.serverSocket = new ServerSocket(port);
     }
 
     @Override
     public void run() {
-        while (!shouldTerminate) {
+        while (!this.shouldTerminate) {
             try {
-                var socket = serverSocket.accept();
-                var handler = new ServerSideAuthenticatorStub(socket, localAuthenticator);
+                final var socket = this.serverSocket.accept();
+                final var handler = new ServerSideAuthenticatorStub(socket, this.localAuthenticator);
                 handler.start();
-            } catch (SocketException e) {
+            } catch (final SocketException e) {
                 if (e.getMessage().contains("closed")) {
                     // silently ignores
                 } else {
                     e.printStackTrace();
                 }
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
     public void terminate() {
-        shouldTerminate = true;
+        this.shouldTerminate = true;
         try {
-            serverSocket.close();
-        } catch (IOException e) {
+            this.serverSocket.close();
+        } catch (final IOException e) {
             // silently ignores
         }
     }
